@@ -9,4 +9,7 @@ fetch(url).then(response => {
 	let cheesePieces = Math.floor(19.99/(3.24 * euroGbp))
 	document.getElementById("pieces").innerHTML = cheesePieces
   document.getElementById("cheese").innerHTML = '&#129472;'.repeat(cheesePieces)
+}).catch(function(err) {
+  console.log(err)
+  document.getElementById("pieces").innerHTML = 'god knows how many(something went wrong)'
 });
