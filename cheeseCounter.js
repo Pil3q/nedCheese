@@ -4,22 +4,20 @@ fetch(url).then(response => {
   return response.json();
 }).then(data => {
   if (window.location.search === "?country=uk") {
-  	let euro = 1 / data.rates.EUR
-  	let gbp = 1 / data.rates.GBP
-  	let euroGbp = euro/gbp
-  	let cheesePieces = Math.floor(19.99/(3.24 * euroGbp))
-  	document.getElementById("pieces").innerHTML = cheesePieces + ' blocks of cheese for £19.99'
-    document.getElementById("cheese").innerHTML = '&#129472;'.repeat(cheesePieces)
+      priceSetter(data.rates.EUR, data.rates.GBP, 19.99, '£')
     }
   else if (window.location.search === '?country=japan') {
-    let euro = 1 / data.rates.EUR
-    let jpy = 1 / data.rates.JPY
-    let euroYpy = euro/jpy
-    let cheesePieces = Math.floor(3000.00/(3.24 * euroYpy))
-    document.getElementById("pieces").innerHTML = cheesePieces + ' blocks of cheese for JPY 3000'
-    document.getElementById("cheese").innerHTML = '&#129472;'.repeat(cheesePieces)
+    priceSetter(data.rates.EUR, data.rates.JPY, 3000.00, '¥')
   }
 }).catch(function(err) {
   console.log(err)
   document.getElementById("pieces").innerHTML = 'god knows how many(something went wrong)'
 });
+function priceSetter(baseCurrency, currency, price, symbol) {
+  let euro = 1 / baseCurrency
+  let gbp = 1 / currency
+  let euroGbp = euro/gbp
+  let cheesePieces = Math.floor(price/(3.24 * euroGbp))
+  document.getElementById("pieces").innerHTML = cheesePieces + ` blocks of cheese for ${symbol}${price}`
+  document.getElementById("cheese").innerHTML = '&#129472;'.repeat(cheesePieces)
+}
